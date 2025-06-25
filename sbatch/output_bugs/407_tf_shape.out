@@ -1,0 +1,141 @@
+Hello zhangy50! You are on node gpu47.  The time is Wed Apr  9 11:12:19 EEST 2025.
+Wed Apr  9 11:12:19 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.124.06             Driver Version: 570.124.06     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H100 80GB HBM3          On  |   00000000:5F:00.0 Off |                    0 |
+| N/A   45C    P0             78W /  700W |       1MiB /  81559MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+/scratch/work/zhangy50/RL/openvla
+['/scratch/work/zhangy50/RL/openvla/vla-scripts', '/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python310.zip', '/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10', '/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/lib-dynload', '/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages', '__editable__.openvla-0.0.3.finder.__path_hook__']
+2025-04-09 11:12:57.626343: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-04-09 11:13:01.258748: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2025-04-09 11:13:01.279428: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2025-04-09 11:13:01.685124: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-04-09 11:13:02.690191: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX_VNNI AMX_TILE AMX_INT8 AMX_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-04-09 11:13:08.725980: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+2025-04-09 11:13:31.437838: W tensorflow/core/common_runtime/gpu/gpu_device.cc:2348] TensorFlow was not built with CUDA kernel binaries compatible with compute capability 9.0. CUDA kernels will be jit-compiled from PTX, which could take 30 minutes or longer.
+Fine-tuning OpenVLA Model `openvla/openvla-7b` on `spot_kitchen`
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:04<00:09,  4.82s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:06<00:03,  3.08s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:06<00:00,  1.80s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:06<00:00,  2.32s/it]
+trainable params: 110,828,288 || all params: 7,652,065,472 || trainable%: 1.4483
+2025-04-09 11:14:36.876886: I tensorflow/core/grappler/optimizers/data/replicate_on_split.cc:32] Running replicate on split optimization
+transforms, state shape =  (None, 8)
+transforms, state:  (None, 8) action:  (None, 8) Tensor("strided_slice_2:0", shape=(None, 8), dtype=float32)
+Traceback (most recent call last):
+  File "/scratch/work/zhangy50/RL/openvla/vla-scripts/finetune.py", line 372, in <module>
+    finetune()
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/draccus/argparsing.py", line 203, in wrapper_inner
+    response = fn(cfg, *args, **kwargs)
+  File "/scratch/work/zhangy50/RL/openvla/vla-scripts/finetune.py", line 219, in finetune
+    vla_dataset = RLDSDataset(
+  File "/scratch/work/zhangy50/RL/openvla/prismatic/vla/datasets/datasets.py", line 140, in __init__
+    self.dataset, self.dataset_length, self.dataset_statistics = self.make_dataset(rlds_config)
+  File "/scratch/work/zhangy50/RL/openvla/prismatic/vla/datasets/datasets.py", line 143, in make_dataset
+    return make_interleaved_dataset(**rlds_config)
+  File "/scratch/work/zhangy50/RL/openvla/prismatic/vla/datasets/rlds/dataset.py", line 510, in make_interleaved_dataset
+    _, dataset_statistics = make_dataset_from_rlds(**data_kwargs, train=train)
+  File "/scratch/work/zhangy50/RL/openvla/prismatic/vla/datasets/rlds/dataset.py", line 211, in make_dataset_from_rlds
+    ).traj_map(restructure, num_parallel_calls)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/dlimp/dataset.py", line 17, in wrapper
+    result = f(*args, **kwargs)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/dlimp/dataset.py", line 178, in traj_map
+    return super().map(fn, num_parallel_calls=num_parallel_calls, **kwargs)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/data/ops/dataset_ops.py", line 2280, in map
+    return map_op._map_v2(
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/data/ops/map_op.py", line 40, in _map_v2
+    return _ParallelMapDataset(
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/data/ops/map_op.py", line 148, in __init__
+    self._map_func = structured_function.StructuredFunctionWrapper(
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/data/ops/structured_function.py", line 265, in __init__
+    self._function = fn_factory()
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/eager/polymorphic_function/polymorphic_function.py", line 1227, in get_concrete_function
+    concrete = self._get_concrete_function_garbage_collected(*args, **kwargs)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/eager/polymorphic_function/polymorphic_function.py", line 1197, in _get_concrete_function_garbage_collected
+    self._initialize(args, kwargs, add_initializers_to=initializers)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/eager/polymorphic_function/polymorphic_function.py", line 695, in _initialize
+    self._concrete_variable_creation_fn = tracing_compilation.trace_function(
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/eager/polymorphic_function/tracing_compilation.py", line 178, in trace_function
+    concrete_function = _maybe_define_function(
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/eager/polymorphic_function/tracing_compilation.py", line 283, in _maybe_define_function
+    concrete_function = _create_concrete_function(
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/eager/polymorphic_function/tracing_compilation.py", line 310, in _create_concrete_function
+    traced_func_graph = func_graph_module.func_graph_from_py_func(
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/framework/func_graph.py", line 1059, in func_graph_from_py_func
+    func_outputs = python_func(*func_args, **func_kwargs)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/eager/polymorphic_function/polymorphic_function.py", line 598, in wrapped_fn
+    out = weak_wrapped_fn().__wrapped__(*args, **kwds)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/data/ops/structured_function.py", line 231, in wrapped_fn
+    ret = wrapper_helper(*args)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/data/ops/structured_function.py", line 161, in wrapper_helper
+    ret = autograph.tf_convert(self._func, ag_ctx)(*nested_args)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/autograph/impl/api.py", line 693, in wrapper
+    raise e.ag_error_metadata.to_exception(e)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/autograph/impl/api.py", line 690, in wrapper
+    return converted_call(f, args, kwargs, options=options)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/autograph/impl/api.py", line 439, in converted_call
+    result = converted_f(*effective_args, **kwargs)
+  File "/tmp/__autograph_generated_fileuxxwibcr.py", line 165, in tf__restructure
+    ag__.if_stmt(ag__.ld(absolute_action_mask) is not None, if_body_8, else_body_8, get_state_10, set_state_10, ("traj['absolute_action_mask']",), 1)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/autograph/operators/control_flow.py", line 1217, in if_stmt
+    _py_if_stmt(cond, body, orelse)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/autograph/operators/control_flow.py", line 1270, in _py_if_stmt
+    return body() if cond else orelse()
+  File "/tmp/__autograph_generated_fileuxxwibcr.py", line 160, in if_body_8
+    ag__.if_stmt(ag__.converted_call(ag__.ld(len), (ag__.ld(absolute_action_mask),), None, fscope) != ag__.ld(traj)['action'].shape[-1], if_body_7, else_body_7, get_state_9, set_state_9, (), 0)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/autograph/operators/control_flow.py", line 1217, in if_stmt
+    _py_if_stmt(cond, body, orelse)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/tensorflow/python/autograph/operators/control_flow.py", line 1270, in _py_if_stmt
+    return body() if cond else orelse()
+  File "/tmp/__autograph_generated_fileuxxwibcr.py", line 156, in if_body_7
+    raise ag__.converted_call(ag__.ld(ValueError), (f"Length of absolute_action_mask ({ag__.converted_call(ag__.ld(len), (ag__.ld(absolute_action_mask),), None, fscope)}) does not match action dimension ({ag__.ld(traj)['action'].shape[-1]}).",), None, fscope)
+ValueError: in user code:
+
+    File "/scratch/work/zhangy50/RL/openvla/prismatic/vla/datasets/rlds/dataset.py", line 191, in restructure  *
+        raise ValueError(
+
+    ValueError: Length of absolute_action_mask (7) does not match action dimension (8).
+
+[2025-04-09 11:14:52,825] torch.distributed.elastic.multiprocessing.api: [ERROR] failed (exitcode: 1) local_rank: 0 (pid: 334935) of binary: /scratch/work/zhangy50/.conda_envs/openvla-spot/bin/python3.10
+Traceback (most recent call last):
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 347, in wrapper
+    return f(*args, **kwargs)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/run.py", line 812, in main
+    run(args)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/run.py", line 803, in run
+    elastic_launch(
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 135, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+vla-scripts/finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-04-09_11:14:52
+  host      : gpu47.int.triton.aalto.fi
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 334935)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

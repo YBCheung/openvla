@@ -85,75 +85,62 @@ def generate(cfg: GenerateConfig) -> None:
 
     print("\n[*] Entering Chat Session - CTRL-C to start afresh!\n===\n")
     
-    # Build Prompt
-    prompt_builder.add_turn(role="human", message="is there any food on the table")
-    prompt_text = prompt_builder.get_prompt()
+    # # Build Prompt
+    # prompt_builder.add_turn(role="human", message="is there any food on the table")
+    # prompt_text = prompt_builder.get_prompt()
 
-    # Generate from the VLM
-    # with torch.autocast("cuda", dtype=torch.float16):
-    generated_text = vlm.generate(
-        image,
-        prompt_text,
-        do_sample=cfg.do_sample,
-        temperature=cfg.temperature,
-        max_new_tokens=cfg.max_new_tokens,
-        min_length=cfg.min_length,
-    )
-    prompt_builder.add_turn(role="gpt", message=generated_text)
-    print(f"\t|=>> VLM Response >>> {generated_text}\n")
+    while True:
+        user_input = input(repl_prompt)
 
+        if user_input.lower().startswith("q"):
+            print("\n|=>> Received (q)uit signal => Exiting...")
+            return
 
-    # while True:
-    #     user_input = input(repl_prompt)
+        elif user_input.lower().startswith("i"):
+            # Note => a new image starts a _new_ conversation (for now)
+            # url = input("\n|=>> Enter Image URL: ")
+            image = Image.open(requests.get(DEFAULT_IMAGE_URL, stream=True).raw).convert("RGB")
+            # image = Image.open(requests.get(url, stream=True).raw).convert("RGB")
+            prompt_builder = vlm.get_prompt_builder(system_prompt=system_prompt)
 
-    #     if user_input.lower().startswith("q"):
-    #         print("\n|=>> Received (q)uit signal => Exiting...")
-    #         return
+        elif user_input.lower().startswith("p"):
+            if system_prompt is None:
+                print("\n|=>> Model does not support `system_prompt`!")
+                continue
 
-    #     elif user_input.lower().startswith("i"):
-    #         # Note => a new image starts a _new_ conversation (for now)
-    #         url = input("\n|=>> Enter Image URL: ")
-    #         image = Image.open(requests.get(url, stream=True).raw).convert("RGB")
-    #         prompt_builder = vlm.get_prompt_builder(system_prompt=system_prompt)
+            # Note => a new system prompt starts a _new_ conversation
+            system_prompt = input("\n|=>> Enter New System Prompt: ")
+            prompt_builder = vlm.get_prompt_builder(system_prompt=system_prompt)
+            print(
+                "\n[*] Set New System Prompt:\n"
+                f"    => Prompt Template:\n{prompt_builder.get_potential_prompt('<INSERT PROMPT HERE>')}\n\n"
+            )
 
-    #     elif user_input.lower().startswith("p"):
-    #         if system_prompt is None:
-    #             print("\n|=>> Model does not support `system_prompt`!")
-    #             continue
+        else:
+            print("\n[*] Entering Chat Session - CTRL-C to start afresh!\n===\n")
+            try:
+                while True:
+                    message = input("|=>> Enter Prompt: ")
 
-    #         # Note => a new system prompt starts a _new_ conversation
-    #         system_prompt = input("\n|=>> Enter New System Prompt: ")
-    #         prompt_builder = vlm.get_prompt_builder(system_prompt=system_prompt)
-    #         print(
-    #             "\n[*] Set New System Prompt:\n"
-    #             f"    => Prompt Template:\n{prompt_builder.get_potential_prompt('<INSERT PROMPT HERE>')}\n\n"
-    #         )
+                    # Build Prompt
+                    prompt_builder.add_turn(role="human", message=message)
+                    prompt_text = prompt_builder.get_prompt()
 
-    #     else:
-    #         print("\n[*] Entering Chat Session - CTRL-C to start afresh!\n===\n")
-    #         try:
-    #             while True:
-    #                 message = input("|=>> Enter Prompt: ")
+                    # Generate from the VLM
+                    generated_text = vlm.generate(
+                        image,
+                        prompt_text,
+                        do_sample=cfg.do_sample,
+                        temperature=cfg.temperature,
+                        max_new_tokens=cfg.max_new_tokens,
+                        min_length=cfg.min_length,
+                    )
+                    prompt_builder.add_turn(role="gpt", message=generated_text)
+                    print(f"\t|=>> VLM Response >>> {generated_text}\n")
 
-    #                 # Build Prompt
-    #                 prompt_builder.add_turn(role="human", message=message)
-    #                 prompt_text = prompt_builder.get_prompt()
-
-    #                 # Generate from the VLM
-    #                 generated_text = vlm.generate(
-    #                     image,
-    #                     prompt_text,
-    #                     do_sample=cfg.do_sample,
-    #                     temperature=cfg.temperature,
-    #                     max_new_tokens=cfg.max_new_tokens,
-    #                     min_length=cfg.min_length,
-    #                 )
-    #                 prompt_builder.add_turn(role="gpt", message=generated_text)
-    #                 print(f"\t|=>> VLM Response >>> {generated_text}\n")
-
-    #         except KeyboardInterrupt:
-    #             print("\n===\n")
-    #             continue
+            except KeyboardInterrupt:
+                print("\n===\n")
+                continue
 
 
 if __name__ == "__main__":

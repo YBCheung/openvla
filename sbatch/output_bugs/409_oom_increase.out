@@ -1,0 +1,393 @@
+Hello zhangy50! You are on node gpu48.  The time is Wed Apr  9 23:39:01 EEST 2025.
+Wed Apr  9 23:39:01 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.124.06             Driver Version: 570.124.06     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H100 80GB HBM3          On  |   00000000:5F:00.0 Off |                    0 |
+| N/A   46C    P0             79W /  700W |       1MiB /  81559MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+/scratch/work/zhangy50/RL/openvla
+['/scratch/work/zhangy50/RL/openvla/vla-scripts', '/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python310.zip', '/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10', '/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/lib-dynload', '/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages', '__editable__.openvla-0.0.3.finder.__path_hook__']
+2025-04-09 23:39:32.145345: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-04-09 23:39:35.614172: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2025-04-09 23:39:35.628474: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2025-04-09 23:39:36.068208: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-04-09 23:39:38.099046: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX_VNNI AMX_TILE AMX_INT8 AMX_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-04-09 23:39:44.178642: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+2025-04-09 23:40:03.753362: W tensorflow/core/common_runtime/gpu/gpu_device.cc:2348] TensorFlow was not built with CUDA kernel binaries compatible with compute capability 9.0. CUDA kernels will be jit-compiled from PTX, which could take 30 minutes or longer.
+Fine-tuning OpenVLA Model `openvla/openvla-7b` on `spot_kitchen`
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]
+Loading checkpoint shards:  33%|███▎      | 1/3 [00:03<00:06,  3.49s/it]
+Loading checkpoint shards:  67%|██████▋   | 2/3 [00:04<00:02,  2.14s/it]
+Loading checkpoint shards: 100%|██████████| 3/3 [00:04<00:00,  1.29s/it]
+Loading checkpoint shards: 100%|██████████| 3/3 [00:04<00:00,  1.66s/it]
+trainable params: 110,828,288 || all params: 7,652,065,472 || trainable%: 1.4483
+2025-04-09 23:41:03.277428: I tensorflow/core/grappler/optimizers/data/replicate_on_split.cc:32] Running replicate on split optimization
+transforms, state shape =  (None, 8)
+transforms, state:  (None, 8) action:  (None, 7) Tensor("strided_slice_5:0", shape=(None, 7), dtype=float32)
+04/09 [23:41:04] INFO     | >> [*] Loading existing dataset    data_utils.py:208
+                          statistics from                                       
+                          /scratch/work/zhangy50/RL/spot_VLA/d                  
+                          ataset/tensorflow_datasets/spot_kitc                  
+                          hen/1.0.0/dataset_statistics_89c0500                  
+                          3c0730b0278cfc751602212a42b6e45642b2                  
+                          bc73b9a1e8c2a9a784b02.json.                           
+2025-04-09 23:41:04.822155: I tensorflow/core/grappler/optimizers/data/replicate_on_split.cc:32] Running replicate on split optimization
+transforms, state shape =  (None, 8)
+transforms, state:  (None, 8) action:  (None, 7) Tensor("strided_slice_5:0", shape=(None, 7), dtype=float32)
+
+######################################################################################
+# Loading the following 1 datasets (incl. sampling weight):                         #
+# spot_kitchen: ============================================================1.000000 #
+######################################################################################
+
+04/09 [23:41:05] INFO     | >> [*] Threads per Dataset: [1]       dataset.py:531
+                 INFO     | >> [*] Reads per Dataset: [1]         dataset.py:532
+                 INFO     | >> [*] Constructing datasets...       dataset.py:535
+2025-04-09 23:41:05.307446: I tensorflow/core/grappler/optimizers/data/replicate_on_split.cc:32] Running replicate on split optimization
+transforms, state shape =  (None, 8)
+transforms, state:  (None, 8) action:  (None, 7) Tensor("strided_slice_5:0", shape=(None, 7), dtype=float32)
+                 INFO     | >> [*] Applying frame transforms on   dataset.py:575
+                          dataset...                                            
+04/09 [23:41:07] INFO     | >> [*] Saved dataset statistics    data_utils.py:307
+                          file at path                                          
+                          runs/openvla-7b+spot_kitchen+b16+lr-                  
+                          2e-05+lora-r32+dropout-0.0--image_au                  
+                          g/dataset_statistics.json                             
+wandb: Using wandb-core as the SDK backend. Please refer to https://wandb.me/wandb-core for more information.
+wandb: Currently logged in as: yibo-zhang. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.18.5
+wandb: Run data is saved locally in /scratch/work/zhangy50/RL/openvla/wandb/run-20250409_234107-1hwdbo39
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run ft+openvla-7b+spot_kitchen+b16+lr-2e-05+lora-r32+dropout-0.0--image_aug
+wandb: ⭐️ View project at https://wandb.ai/yibo-zhang/openvla_spot
+wandb: 🚀 View run at https://wandb.ai/yibo-zhang/openvla_spot/runs/1hwdbo39
+
+  0%|          | 0/20 [00:00<?, ?it/s]WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+W0000 00:00:1744231268.975678 1050994 op_level_cost_estimator.cc:699] Error in PredictCost() for the op: op: "CropAndResize" attr { key: "T" value { type: DT_FLOAT } } attr { key: "extrapolation_value" value { f: 0 } } attr { key: "method" value { s: "bilinear" } } inputs { dtype: DT_FLOAT shape { dim { size: 1 } dim { size: 224 } dim { size: 224 } dim { size: -7 } } } inputs { dtype: DT_FLOAT shape { dim { size: -2 } dim { size: 4 } } } inputs { dtype: DT_INT32 shape { dim { size: -2 } } } inputs { dtype: DT_INT32 shape { dim { size: 2 } } } device { type: "CPU" vendor: "GenuineIntel" model: "111" frequency: 2100 num_cores: 2 environment { key: "cpu_instruction_set" value: "AVX SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2" } environment { key: "eigen" value: "3.4.90" } l1_cache_size: 49152 l2_cache_size: 2097152 l3_cache_size: 110100480 memory_size: 268435456 } outputs { dtype: DT_FLOAT shape { dim { size: -2 } dim { size: -8 } dim { size: -9 } dim { size: -7 } } }
+W0000 00:00:1744231268.976347 1050994 op_level_cost_estimator.cc:699] Error in PredictCost() for the op: op: "CropAndResize" attr { key: "T" value { type: DT_FLOAT } } attr { key: "extrapolation_value" value { f: 0 } } attr { key: "method" value { s: "bilinear" } } inputs { dtype: DT_FLOAT shape { dim { size: 1 } dim { size: 224 } dim { size: 224 } dim { size: -6 } } } inputs { dtype: DT_FLOAT shape { dim { size: -3 } dim { size: 4 } } } inputs { dtype: DT_INT32 shape { dim { size: -3 } } } inputs { dtype: DT_INT32 shape { dim { size: 2 } } } device { type: "CPU" vendor: "GenuineIntel" model: "111" frequency: 2100 num_cores: 2 environment { key: "cpu_instruction_set" value: "AVX SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2" } environment { key: "eigen" value: "3.4.90" } l1_cache_size: 49152 l2_cache_size: 2097152 l3_cache_size: 110100480 memory_size: 268435456 } outputs { dtype: DT_FLOAT shape { dim { size: -3 } dim { size: -10 } dim { size: -11 } dim { size: -6 } } }
+
+  5%|▌         | 1/20 [00:14<04:31, 14.27s/it]
+ 10%|█         | 2/20 [00:15<01:53,  6.31s/it]
+ 15%|█▌        | 3/20 [00:15<01:03,  3.76s/it]
+ 20%|██        | 4/20 [00:16<00:40,  2.56s/it]
+ 25%|██▌       | 5/20 [00:17<00:28,  1.90s/it]
+ 30%|███       | 6/20 [00:17<00:21,  1.50s/it]Saving Model Checkpoint for Step 5
+/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/peft/utils/save_and_load.py:180: UserWarning: Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.
+  warnings.warn("Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.")
+
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:00,  4.57it/s][A
+
+Loading checkpoint shards:  67%|██████▋   | 2/3 [00:00<00:00,  5.45it/s][A
+
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  5.94it/s][A
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  5.68it/s]
+04/09 [23:41:43] INFO     | >> [*] Saved dataset statistics    data_utils.py:307
+                          file at path                                          
+                          runs/openvla-7b+spot_kitchen+b16+lr-                  
+                          2e-05+lora-r32+dropout-0.0--image_au                  
+                          g--5_chkpt/dataset_statistics.json                    
+Saved Model Checkpoint for Step 5 at: runs/openvla-7b+spot_kitchen+b16+lr-2e-05+lora-r32+dropout-0.0--image_aug--5_chkpt
+
+ 35%|███▌      | 7/20 [00:50<02:33, 11.79s/it]
+ 40%|████      | 8/20 [00:51<01:39,  8.27s/it]
+ 45%|████▌     | 9/20 [00:52<01:05,  5.92s/it]
+ 50%|█████     | 10/20 [00:53<00:43,  4.32s/it]
+ 55%|█████▌    | 11/20 [00:53<00:28,  3.21s/it]Saving Model Checkpoint for Step 10
+/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/peft/utils/save_and_load.py:180: UserWarning: Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.
+  warnings.warn("Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.")
+
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:00,  3.82it/s][A
+
+Loading checkpoint shards:  67%|██████▋   | 2/3 [00:00<00:00,  4.86it/s][A
+
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  5.45it/s][A
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  5.12it/s]
+04/09 [23:42:19] INFO     | >> [*] Saved dataset statistics    data_utils.py:307
+                          file at path                                          
+                          runs/openvla-7b+spot_kitchen+b16+lr-                  
+                          2e-05+lora-r32+dropout-0.0--image_au                  
+                          g--10_chkpt/dataset_statistics.json                   
+Saved Model Checkpoint for Step 10 at: runs/openvla-7b+spot_kitchen+b16+lr-2e-05+lora-r32+dropout-0.0--image_aug--10_chkpt
+
+ 60%|██████    | 12/20 [01:26<01:36, 12.11s/it]
+ 65%|██████▌   | 13/20 [01:27<01:00,  8.66s/it]
+ 70%|███████   | 14/20 [01:27<00:37,  6.27s/it]
+ 75%|███████▌  | 15/20 [01:28<00:23,  4.60s/it]
+ 80%|████████  | 16/20 [01:29<00:13,  3.43s/it]Saving Model Checkpoint for Step 15
+/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/peft/utils/save_and_load.py:180: UserWarning: Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.
+  warnings.warn("Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.")
+
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:00,  2.56it/s][A
+
+Loading checkpoint shards:  67%|██████▋   | 2/3 [00:00<00:00,  3.64it/s][A
+
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.49it/s][A
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.02it/s]
+04/09 [23:42:54] INFO     | >> [*] Saved dataset statistics    data_utils.py:307
+                          file at path                                          
+                          runs/openvla-7b+spot_kitchen+b16+lr-                  
+                          2e-05+lora-r32+dropout-0.0--image_au                  
+                          g--15_chkpt/dataset_statistics.json                   
+Saved Model Checkpoint for Step 15 at: runs/openvla-7b+spot_kitchen+b16+lr-2e-05+lora-r32+dropout-0.0--image_aug--15_chkpt
+
+ 85%|████████▌ | 17/20 [02:01<00:36, 12.08s/it]
+ 90%|█████████ | 18/20 [02:02<00:17,  8.66s/it]
+ 95%|█████████▌| 19/20 [02:02<00:06,  6.28s/it]
+100%|██████████| 20/20 [02:03<00:00,  4.61s/it]
+21it [02:04,  3.45s/it]                        Saving Model Checkpoint for Step 20
+/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/peft/utils/save_and_load.py:180: UserWarning: Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.
+  warnings.warn("Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.")
+
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:00,  2.72it/s][A
+
+Loading checkpoint shards:  67%|██████▋   | 2/3 [00:00<00:00,  3.81it/s][A
+
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.67it/s][A
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.20it/s]
+04/09 [23:43:29] INFO     | >> [*] Saved dataset statistics    data_utils.py:307
+                          file at path                                          
+                          runs/openvla-7b+spot_kitchen+b16+lr-                  
+                          2e-05+lora-r32+dropout-0.0--image_au                  
+                          g--20_chkpt/dataset_statistics.json                   
+Saved Model Checkpoint for Step 20 at: runs/openvla-7b+spot_kitchen+b16+lr-2e-05+lora-r32+dropout-0.0--image_aug--20_chkpt
+
+22it [02:37, 12.53s/it]
+23it [02:38,  8.99s/it]
+24it [02:39,  6.51s/it]
+25it [02:40,  4.77s/it]
+26it [02:40,  3.56s/it]Saving Model Checkpoint for Step 25
+/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/peft/utils/save_and_load.py:180: UserWarning: Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.
+  warnings.warn("Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.")
+
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:00,  2.82it/s][A
+
+Loading checkpoint shards:  67%|██████▋   | 2/3 [00:00<00:00,  3.88it/s][A
+
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.72it/s][A
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.27it/s]
+04/09 [23:44:06] INFO     | >> [*] Saved dataset statistics    data_utils.py:307
+                          file at path                                          
+                          runs/openvla-7b+spot_kitchen+b16+lr-                  
+                          2e-05+lora-r32+dropout-0.0--image_au                  
+                          g--25_chkpt/dataset_statistics.json                   
+Saved Model Checkpoint for Step 25 at: runs/openvla-7b+spot_kitchen+b16+lr-2e-05+lora-r32+dropout-0.0--image_aug--25_chkpt
+
+27it [03:15, 12.79s/it]
+28it [03:15,  9.17s/it]
+29it [03:16,  6.64s/it]
+30it [03:17,  4.86s/it]
+31it [03:18,  3.63s/it]Saving Model Checkpoint for Step 30
+/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/peft/utils/save_and_load.py:180: UserWarning: Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.
+  warnings.warn("Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.")
+
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:00,  2.82it/s][A
+
+Loading checkpoint shards:  67%|██████▋   | 2/3 [00:00<00:00,  3.89it/s][A
+
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.72it/s][A
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.27it/s]
+04/09 [23:44:43] INFO     | >> [*] Saved dataset statistics    data_utils.py:307
+                          file at path                                          
+                          runs/openvla-7b+spot_kitchen+b16+lr-                  
+                          2e-05+lora-r32+dropout-0.0--image_au                  
+                          g--30_chkpt/dataset_statistics.json                   
+Saved Model Checkpoint for Step 30 at: runs/openvla-7b+spot_kitchen+b16+lr-2e-05+lora-r32+dropout-0.0--image_aug--30_chkpt
+
+32it [03:52, 12.76s/it]
+33it [03:52,  9.16s/it]
+34it [03:53,  6.62s/it]
+35it [03:54,  4.85s/it]
+36it [03:55,  3.61s/it]Saving Model Checkpoint for Step 35
+/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/peft/utils/save_and_load.py:180: UserWarning: Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.
+  warnings.warn("Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.")
+
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:00,  2.82it/s][A
+
+Loading checkpoint shards:  67%|██████▋   | 2/3 [00:00<00:00,  3.90it/s][A
+
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.73it/s][A
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.28it/s]
+04/09 [23:45:19] INFO     | >> [*] Saved dataset statistics    data_utils.py:307
+                          file at path                                          
+                          runs/openvla-7b+spot_kitchen+b16+lr-                  
+                          2e-05+lora-r32+dropout-0.0--image_au                  
+                          g--35_chkpt/dataset_statistics.json                   
+Saved Model Checkpoint for Step 35 at: runs/openvla-7b+spot_kitchen+b16+lr-2e-05+lora-r32+dropout-0.0--image_aug--35_chkpt
+
+37it [04:29, 12.72s/it]
+38it [04:29,  9.12s/it]
+39it [04:30,  6.61s/it]
+40it [04:31,  4.84s/it]
+41it [04:31,  3.61s/it]Saving Model Checkpoint for Step 40
+/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/peft/utils/save_and_load.py:180: UserWarning: Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.
+  warnings.warn("Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.")
+
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:00,  2.84it/s][A
+
+Loading checkpoint shards:  67%|██████▋   | 2/3 [00:00<00:00,  3.91it/s][A
+
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.61it/s][A
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.22it/s]
+04/09 [23:45:57] INFO     | >> [*] Saved dataset statistics    data_utils.py:307
+                          file at path                                          
+                          runs/openvla-7b+spot_kitchen+b16+lr-                  
+                          2e-05+lora-r32+dropout-0.0--image_au                  
+                          g--40_chkpt/dataset_statistics.json                   
+Saved Model Checkpoint for Step 40 at: runs/openvla-7b+spot_kitchen+b16+lr-2e-05+lora-r32+dropout-0.0--image_aug--40_chkpt
+
+42it [05:05, 12.59s/it]
+43it [05:06,  9.02s/it]
+44it [05:06,  6.54s/it]
+45it [05:07,  4.79s/it]
+46it [05:08,  3.57s/it]Saving Model Checkpoint for Step 45
+/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/peft/utils/save_and_load.py:180: UserWarning: Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.
+  warnings.warn("Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.")
+
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:00,  2.85it/s][A
+
+Loading checkpoint shards:  67%|██████▋   | 2/3 [00:00<00:00,  3.91it/s][A
+
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.60it/s][A
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.21it/s]
+04/09 [23:46:33] INFO     | >> [*] Saved dataset statistics    data_utils.py:307
+                          file at path                                          
+                          runs/openvla-7b+spot_kitchen+b16+lr-                  
+                          2e-05+lora-r32+dropout-0.0--image_au                  
+                          g--45_chkpt/dataset_statistics.json                   
+Saved Model Checkpoint for Step 45 at: runs/openvla-7b+spot_kitchen+b16+lr-2e-05+lora-r32+dropout-0.0--image_aug--45_chkpt
+
+47it [05:42, 12.67s/it]
+48it [05:43,  9.09s/it]
+49it [05:43,  6.58s/it]
+50it [05:44,  4.83s/it]
+51it [05:45,  3.59s/it]Saving Model Checkpoint for Step 50
+/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/peft/utils/save_and_load.py:180: UserWarning: Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.
+  warnings.warn("Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.")
+
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:00,  2.84it/s][A
+
+Loading checkpoint shards:  67%|██████▋   | 2/3 [00:00<00:00,  3.91it/s][A
+
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.74it/s][A
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.29it/s]
+04/09 [23:47:10] INFO     | >> [*] Saved dataset statistics    data_utils.py:307
+                          file at path                                          
+                          runs/openvla-7b+spot_kitchen+b16+lr-                  
+                          2e-05+lora-r32+dropout-0.0--image_au                  
+                          g--50_chkpt/dataset_statistics.json                   
+Saved Model Checkpoint for Step 50 at: runs/openvla-7b+spot_kitchen+b16+lr-2e-05+lora-r32+dropout-0.0--image_aug--50_chkpt
+
+52it [06:20, 12.97s/it]
+53it [06:20,  9.30s/it]
+54it [06:21,  6.73s/it]
+55it [06:22,  4.93s/it]
+56it [06:22,  3.66s/it]Saving Model Checkpoint for Step 55
+/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/peft/utils/save_and_load.py:180: UserWarning: Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.
+  warnings.warn("Setting `save_embedding_layers` to `True` as embedding layers found in `target_modules`.")
+
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:00,  2.83it/s][A
+
+Loading checkpoint shards:  67%|██████▋   | 2/3 [00:00<00:00,  3.89it/s][A
+
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.71it/s][A
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.27it/s]
+04/09 [23:47:48] INFO     | >> [*] Saved dataset statistics    data_utils.py:307
+                          file at path                                          
+                          runs/openvla-7b+spot_kitchen+b16+lr-                  
+                          2e-05+lora-r32+dropout-0.0--image_au                  
+                          g--55_chkpt/dataset_statistics.json                   
+
+                       
+Traceback (most recent call last):
+  File "/scratch/work/zhangy50/RL/openvla/vla-scripts/finetune.py", line 372, in <module>
+    finetune()
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/draccus/argparsing.py", line 203, in wrapper_inner
+    response = fn(cfg, *args, **kwargs)
+  File "/scratch/work/zhangy50/RL/openvla/vla-scripts/finetune.py", line 363, in finetune
+    merged_vla.save_pretrained(checkpoint_dir)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/transformers/modeling_utils.py", line 2584, in save_pretrained
+    safe_save_file(shard, os.path.join(save_directory, shard_file), metadata={"format": "pt"})
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/safetensors/torch.py", line 286, in save_file
+    serialize_file(_flatten(tensors), filename, metadata=metadata)
+safetensors_rust.SafetensorError: Error while serializing: IoError(Os { code: 122, kind: FilesystemQuotaExceeded, message: "Disk quota exceeded" })
+[1;34mwandb[0m: 🚀 View run [33mft+openvla-7b+spot_kitchen+b16+lr-2e-05+lora-r32+dropout-0.0--image_aug[0m at: [34mhttps://wandb.ai/yibo-zhang/openvla_spot/runs/1hwdbo39[0m
+[1;34mwandb[0m: Find logs at: [1;35mwandb/run-20250409_234107-1hwdbo39/logs[0m
+[2025-04-09 23:48:04,298] torch.distributed.elastic.multiprocessing.api: [ERROR] failed (exitcode: 1) local_rank: 0 (pid: 1050994) of binary: /scratch/work/zhangy50/.conda_envs/openvla-spot/bin/python3.10
+Traceback (most recent call last):
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 347, in wrapper
+    return f(*args, **kwargs)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/run.py", line 812, in main
+    run(args)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/run.py", line 803, in run
+    elastic_launch(
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 135, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+vla-scripts/finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-04-09_23:48:04
+  host      : gpu48.int.triton.aalto.fi
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 1050994)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

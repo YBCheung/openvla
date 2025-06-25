@@ -1,0 +1,101 @@
+name: openvla-tf-torch
+
+channels:
+
+  - pytorch
+
+  - nvidia
+
+  - conda-forge
+
+dependencies:
+
+  - python=3.10
+
+  - pip
+
+  - mamba   # same as above
+
+  # Compiler packages, must be supported by CUDA
+
+  # https://docs.nvidia.com/cuda/cuda-installation-guide-linux/#host-compiler-support-policy
+
+  - compilers
+
+  - gcc>=11.4,<13.3
+
+  - gxx>=11.4,<13.3
+
+  - gfortran>=11.4,<13.3
+
+  - clang>=7,<20.0
+
+  # CUDA versions are determined by pytorch
+
+  - cudnn>=8.9.2,<10
+
+  - cuda-version>=12.4,<12.7
+
+  - cuda-compiler>=12.4,<12.7
+
+  - cuda-nvcc>=12.4,<12.7
+
+  - cuda-libraries-dev>=12.4,<12.7
+
+  - pytorch::pytorch=2.4.1   # 2025.1: 2.5.1 caused micromamba core dump, 2.4.1 worked
+
+  - pytorch::pytorch-cuda=12.4
+
+  - pytorch::torchaudio
+
+  - pytorch::torchvision
+
+# Force blas versions 
+
+  - blas * mkl 
+
+  - libblas=*=*mkl* 
+  
+  # These follow the CUDA version set by pytorch 
+  
+  # - py-xgboost=*=cuda12* 
+  
+  # - pyarrow=*=*cuda 
+  
+  - tensorflow=2.17.*=cuda120py311* 
+  
+  # Machine learning usability tools 
+  
+  # - scalene 
+  
+  # - tensorboard 
+  
+  # - tensorboardx 
+  
+  # Generic packages 
+  
+  # - cython 
+  
+  # - jupyter 
+  
+  # - jupyter_contrib_nbextensions 
+  
+  # - jupyterlab 
+  
+  # - jupyterlab-git 
+  
+  # - jupytext 
+  
+  - libwebp>=1.3.2 # CVE-2023-4863 
+  
+  # - nbdime 
+  
+  # - numba 
+  
+  - numexpr>=2.8.4 
+  
+  - numpy 
+  
+  # - scalene 
+  
+  # - seaborn

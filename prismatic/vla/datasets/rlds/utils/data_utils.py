@@ -276,15 +276,33 @@ def save_dataset_statistics(dataset_statistics, run_dir):
     out_path = run_dir / "dataset_statistics.json"
     with open(out_path, "w") as f_json:
         for _, stats in dataset_statistics.items():
-            for k in stats["action"].keys():
-                stats["action"][k] = stats["action"][k].tolist()
+            # print("data_utils check", type(stats), type(stats["action"]), hasattr(stats["action"], "tolist"))
+            
+            # Handle action
+            if "action" in stats:
+                first_action_key = next(iter(stats["action"]))
+                # print(first_action_key, type(stats["action"][first_action_key]), hasattr(stats["action"][first_action_key], "tolist") )  # list, false
+                if hasattr(stats["action"][first_action_key], "tolist"):
+                    for k in stats["action"]:
+                        stats["action"][k] = stats["action"][k].tolist()
+
+            # Handle proprio
             if "proprio" in stats:
-                for k in stats["proprio"].keys():
-                    stats["proprio"][k] = stats["proprio"][k].tolist()
+                first_proprio_key = next(iter(stats["proprio"]))
+                if hasattr(stats["proprio"][first_proprio_key], "tolist"):
+                    for k in stats["proprio"]:
+                        stats["proprio"][k] = stats["proprio"][k].tolist()
+
+            # Handle num_trajectories
             if "num_trajectories" in stats:
-                stats["num_trajectories"] = stats["num_trajectories"].item()
+                if hasattr(stats["num_trajectories"], "item"):
+                    stats["num_trajectories"] = stats["num_trajectories"].item()
+
+            # Handle num_transitions
             if "num_transitions" in stats:
-                stats["num_transitions"] = stats["num_transitions"].item()
+                if hasattr(stats["num_transitions"], "item"):
+                    stats["num_transitions"] = stats["num_transitions"].item()
+
         json.dump(dataset_statistics, f_json, indent=2)
     overwatch.info(f"Saved dataset statistics file at path {out_path}")
 

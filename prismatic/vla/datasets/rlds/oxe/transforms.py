@@ -27,6 +27,20 @@ from prismatic.vla.datasets.rlds.utils.data_utils import (
     relabel_bridge_actions,
 )
 
+def spot_kitchen_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
+    import tensorflow_graphics.geometry.transformation as tft
+    trajectory["action"] = tf.concat(       # # action (7,), 3 xyz, 3 pitch roll yaw, 1 gripper
+        (
+            trajectory["action"][:, :3],
+            tft.euler.from_quaternion(trajectory["action"][:, 3:7]), 
+            trajectory["action"][:, -1:],   # already binarized, 1 for open, 0 for close.
+        ),
+        axis=-1,
+    )
+    trajectory["observation"]["EEF_state"] = trajectory["observation"]["state"][:, :7]
+    trajectory["observation"]["gripper_state"] = trajectory["observation"]["state"][:, -1:]  # 2D, (N, 1). if [:, -1], then 1D (N, )
+    return trajectory
+
 
 def bridge_oxe_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -826,6 +840,7 @@ def tdroid_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
 
 # === Registry ===
 OXE_STANDARDIZATION_TRANSFORMS = {
+    "spot_kitchen": spot_kitchen_dataset_transform,
     "bridge_oxe": bridge_oxe_dataset_transform,
     "bridge_orig": bridge_orig_dataset_transform,
     "bridge_dataset": bridge_orig_dataset_transform,

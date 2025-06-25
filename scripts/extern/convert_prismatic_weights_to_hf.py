@@ -7,6 +7,13 @@ via `trust_remote_code = True`.
 
 Theoretically, these changes should be fully compatible with directly merging the models into `transformers` down the
 line, with first-class support.
+
+graph LR
+    A[Prismatic Training] -->|Native Output| B[convert_prismatic_weights_to_hf.py]
+    B --> C[HF-Compatible Checkpoint]
+    C --> D[Your Fine-Tuning]
+    D --> E[Current Checkpoint]
+    
 """
 
 import json

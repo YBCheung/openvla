@@ -1,0 +1,78 @@
+Hello zhangy50! You are on node gpu41.  The time is Thu Aug  8 13:30:12 EEST 2024.
+/scratch/work/zhangy50/RL/openvla
+Thu Aug  8 13:30:13 EEST 2024
+2024-08-08 13:30:58.939241: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2024-08-08 13:30:58.957220: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2024-08-08 13:30:59.395320: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2024-08-08 13:31:00.710842: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-08-08 13:31:06.280871: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+08/08 [13:31:21] INFO     | >> Note: NumExpr detected 48 cores but  utils.py:145
+                          "NUMEXPR_MAX_THREADS" not set, so                     
+                          enforcing safe limit of 8.                            
+                 INFO     | >> NumExpr defaulting to 8 threads.     utils.py:157
+2024-08-08 13:31:26.299700: W tensorflow/core/common_runtime/gpu/gpu_device.cc:2256] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+08/08 [13:31:33] INFO     | >> [*] Initializing Generation        generate.py:54
+                          Playground with Prismatic Model                       
+                          `prism-dinosiglip+7b`                                 
+cuda
+                 INFO     | >> [*] Downloading `prism-dinosiglip+7b   load.py:72
+                          from HF Hub                                           
+                 INFO     | >> [*] Found Config =>> Loading &         load.py:85
+                          Freezing prism-dinosiglip+7b with:                    
+                                       Vision Backbone =>>                      
+                          dinosiglip-vit-so-384px                               
+                                       LLM Backbone    =>>                      
+                          llama2-7b-pure                                        
+                                       Arch Specifier  =>>                      
+                          no-align+fused-gelu-mlp                               
+                                       Checkpoint Path =>>                      
+                          `/scratch/work/zhangy50/RL/cache/models--TR           
+                          I-ML--prismatic-vlms/snapshots/a3ba8a19c453           
+                          a82eaf5a3fb1e699dd9e441f0a12/prism-dinosigl           
+                          ip+7b/checkpoints/latest-checkpoint.pt`               
+                 INFO     | >> [*] Loading Vision Backbone            load.py:94
+                          dinosiglip-vit-so-384px                               
+08/08 [13:31:38] INFO     | >> Loading pretrained weights from   _builder.py:186
+                          Hugging Face hub                                      
+                          (timm/vit_large_patch14_reg4_dinov2.lv                
+                          d142m)                                                
+08/08 [13:32:01] INFO     | >>  Safe alternative available for       _hub.py:180
+                          'pytorch_model.bin' (as                               
+                          'model.safetensors'). Loading weights                 
+                          using safetensors.                                    
+08/08 [13:32:02] INFO     | >> Resized position embedding: (37,  pos_embed.py:55
+                          37) to (27, 27).                                      
+08/08 [13:32:09] INFO     | >> Loading pretrained weights from   _builder.py:186
+                          Hugging Face hub                                      
+                          (('timm/ViT-SO400M-14-SigLIP-384',                    
+                          'open_clip_pytorch_model.bin'))                       
+08/08 [13:32:43] INFO     | >>  Safe alternative available for       _hub.py:180
+                          'open_clip_pytorch_model.bin' (as                     
+                          'open_clip_model.safetensors'). Loading               
+                          weights using safetensors.                            
+08/08 [13:32:47] INFO     | >> [*] Loading Pretrained LLM            load.py:101
+                          llama2-7b-pure via HF Transformers                    
+                 INFO     | >>     |=> Building empty llama2 LLM base_llm.py:134
+                          from `meta-llama/Llama-2-7b-hf`                       
+08/08 [13:33:43] INFO     | >>     |=> Loading llama2 (Fast)     base_llm.py:151
+                          Tokenizer via the AutoTokenizer API                   
+08/08 [13:33:48] INFO     | >> [*] Loading VLM prism-dinosiglip+7b   load.py:114
+                          from Checkpoint                                       
+[*] Dropping into Prismatic VLM REPL with Default Generation Setup => Initial Conditions:
+       => Prompt Template:
+
+In: <INSERT PROMPT HERE>
+Out:
+
+       => Default Image URL: `https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/beignets-task-guide.png`
+===
+
+
+[*] Entering Chat Session - CTRL-C to start afresh!
+===
+
+	|=>> VLM Response >>> Yes, there is food on the table.
+
+finished at Thu Aug  8 13:34:29 EEST 2024

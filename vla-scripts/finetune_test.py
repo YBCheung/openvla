@@ -17,12 +17,10 @@ Run with:
                                     --dataset_name <DATASET_NAME> \
                                     --run_root_dir <PATH/TO/LOGS/DIR> \
                                     ...
-
-    
 """
 
-import sys
-print(sys.path)
+# import sys
+# print(sys.path)
 import os
 from collections import deque
 from dataclasses import dataclass
@@ -82,28 +80,28 @@ class FinetuneConfig:
     vla_path: str = "openvla/openvla-7b"                            # Path to OpenVLA model (on HuggingFace Hub)
 
     # Directory Paths
-    data_root_dir: Path = Path("/scratch/work/zhangy50/RL/spot_VLA/dataset/tensorflow_datasets")        # Path to Open-X dataset directory
-    dataset_name: str = "spot_kitchen"                                # Name of fine-tuning dataset (e.g., `droid_wipe`)
-    run_root_dir: Path = Path("runs")                              # Path to directory to store logs & checkpoints
+    data_root_dir: Path = Path("~/tensorflow_datasets/example_dataset/1.0.0")        # Path to Open-X dataset directory
+    dataset_name: str = "example_dataset"                                # Name of fine-tuning dataset (e.g., `droid_wipe`)
+    run_root_dir: Path = Path("runs")                               # Path to directory to store logs & checkpoints
     adapter_tmp_dir: Path = Path("adapter-tmp")                     # Temporary directory for LoRA weights before fusing
 
     # Fine-tuning Parameters
-    batch_size: int = 16  # 24 to big for H100                                        # Fine-tuning batch size
-    max_steps: int = 10_000 # 10_000                                        # Max number of fine-tuning steps
-    save_steps: int = 2000                                          # Interval for checkpoint saving
+    batch_size: int = 4 # 16                                            # Fine-tuning batch size
+    max_steps: int = 200_000                                        # Max number of fine-tuning steps
+    save_steps: int = 5000                                          # Interval for checkpoint saving
     learning_rate: float = 2e-5                                     # Fine-tuning learning rate
     grad_accumulation_steps: int = 1                                # Gradient accumulation steps
     image_aug: bool = True                                          # Whether to train with image augmentations
-    shuffle_buffer_size: int = 2000 # 100_000                              # Dataloader shuffle buffer size (can reduce if OOM)
-    save_latest_checkpoint_only: bool = False                        # Whether to save only one checkpoint per run and
+    shuffle_buffer_size: int = 1000 # 100_000                              # Dataloader shuffle buffer size (can reduce if OOM)
+    save_latest_checkpoint_only: bool = False #True                        # Whether to save only one checkpoint per run and
                                                                     #   continually overwrite the latest checkpoint
                                                                     #   (If False, saves all checkpoints)
 
     # LoRA Arguments
     use_lora: bool = True                                           # Whether to use LoRA fine-tuning
-    lora_rank: int = 64                                             # Rank of LoRA weight matrix
+    lora_rank: int = 32                                             # Rank of LoRA weight matrix
     lora_dropout: float = 0.0                                       # Dropout applied to LoRA weights
-    use_quantization: bool = False                                  # Whether to 4-bit quantize VLA for LoRA fine-tuning
+    use_quantization: bool = True # False                                  # Whether to 4-bit quantize VLA for LoRA fine-tuning
                                                                     #   => CAUTION: Reduces memory but hurts performance
 
     # Tracking Parameters
@@ -120,6 +118,13 @@ def finetune(cfg: FinetuneConfig) -> None:
 
     # [Validate] Ensure GPU Available & Set Device / Distributed Context
     assert torch.cuda.is_available(), "Fine-tuning assumes at least one GPU is available!"
+    # if not cfg.use_quantization:
+    if torch.cuda.is_bf16_supported():
+        dtype = torch.bfloat16
+    else:
+        dtype = torch.float16  # Fallback for V100s and older GPUs
+    print(f'use {dtype}')
+
     distributed_state = PartialState()
     torch.cuda.set_device(device_id := distributed_state.local_process_index)
     torch.cuda.empty_cache()
@@ -145,10 +150,11 @@ def finetune(cfg: FinetuneConfig) -> None:
 
     # Quantization Config =>> only if LoRA fine-tuning
     quantization_config = None
+    
     if cfg.use_quantization:
         assert cfg.use_lora, "Quantized training only supported for LoRA fine-tuning!"
         quantization_config = BitsAndBytesConfig(
-            load_in_4bit=True, bnb_4bit_compute_dtype=torch.bfloat16, bnb_4bit_quant_type="nf4"
+            load_in_4bit=True, bnb_4bit_compute_dtype=dtype, bnb_4bit_quant_type="nf4"   # torch.bfloat16
         )
 
     # Register OpenVLA model to HF Auto Classes (not needed if the model is on HF Hub)
@@ -161,7 +167,7 @@ def finetune(cfg: FinetuneConfig) -> None:
     processor = AutoProcessor.from_pretrained(cfg.vla_path, trust_remote_code=True)
     vla = AutoModelForVision2Seq.from_pretrained(
         cfg.vla_path,
-        torch_dtype=torch.bfloat16,
+        torch_dtype= dtype, #torch.bfloat16,
         quantization_config=quantization_config,
         low_cpu_mem_usage=True,
         trust_remote_code=True,
@@ -201,21 +207,21 @@ def finetune(cfg: FinetuneConfig) -> None:
     #       your own Dataset, make sure to add the appropriate logic to the training loop!
     #
     # ---
-    # from prismatic.vla.datasets import DummyDataset
+    from prismatic.vla.datasets import DummyDataset
     
-    # vla_dataset = DummyDataset(
-    #     action_tokenizer,
-    #     processor.tokenizer,
-    #     image_transform=processor.image_processor.apply_transform,
-    #     prompt_builder_fn=PurePromptBuilder if "v01" not in cfg.vla_path else VicunaV15ChatPromptBuilder,
-    # )
-    # ---
-    batch_transform = RLDSBatchTransform(
+    vla_dataset = DummyDataset(
         action_tokenizer,
         processor.tokenizer,
         image_transform=processor.image_processor.apply_transform,
         prompt_builder_fn=PurePromptBuilder if "v01" not in cfg.vla_path else VicunaV15ChatPromptBuilder,
     )
+    # ---
+    # batch_transform = RLDSBatchTransform(
+    #     action_tokenizer,
+    #     processor.tokenizer,
+    #     image_transform=processor.image_processor.apply_transform,
+    #     prompt_builder_fn=PurePromptBuilder if "v01" not in cfg.vla_path else VicunaV15ChatPromptBuilder,
+    # )
     vla_dataset = RLDSDataset(
         cfg.data_root_dir,
         cfg.dataset_name,
@@ -254,16 +260,12 @@ def finetune(cfg: FinetuneConfig) -> None:
     with tqdm.tqdm(total=cfg.max_steps, leave=False) as progress:
         vla.train()
         optimizer.zero_grad()
-        print(len(dataloader), len(vla_dataset))
         for batch_idx, batch in enumerate(dataloader):
-            if batch_idx > cfg.max_steps:
-                break
-
-            with torch.autocast("cuda", dtype=torch.bfloat16):
+            with torch.autocast("cuda", dtype=dtype): # torch.bfloat16
                 output: CausalLMOutputWithPast = vla(
                     input_ids=batch["input_ids"].to(device_id),
                     attention_mask=batch["attention_mask"].to(device_id),
-                    pixel_values=batch["pixel_values"].to(torch.bfloat16).to(device_id),
+                    pixel_values=batch["pixel_values"].to(dtype).to(device_id),  # torch.bfloat16
                     labels=batch["labels"],
                 )
                 loss = output.loss
@@ -275,13 +277,15 @@ def finetune(cfg: FinetuneConfig) -> None:
             normalized_loss.backward()
 
             # Compute Accuracy and L1 Loss for Logging
-            action_logits = output.logits[:, vla.module.vision_backbone.featurizer.patch_embed.num_patches : -1]
+            action_logits = output.logits[:, vla.module.vision_backbone.featurizer.patch_embed.num_patches : -1] # raw scores before softmax
             action_preds = action_logits.argmax(dim=2)
-            action_gt = batch["labels"][:, 1:].to(action_preds.device)
-            mask = action_gt > action_tokenizer.action_token_begin_idx
+            action_gt = batch["labels"][:, 1:].to(action_preds.device)  # ground truth actiobs, remove the first [BOS] in the sequence. 
+            mask = action_gt > action_tokenizer.action_token_begin_idx  # exclude padding and special tokens
 
             # Compute Accuracy
-            correct_preds = (action_preds == action_gt) & mask
+            correct_preds = (action_preds == action_gt) & mask   # zyb_question: the action is float? why use == not range? print to see TODO 
+            print(action_preds[:5], action_gt[:5])   # zyb_add
+
             action_accuracy = correct_preds.sum().float() / mask.sum().float()
 
             # Compute L1 Loss on Predicted (Continuous) Actions
@@ -344,7 +348,7 @@ def finetune(cfg: FinetuneConfig) -> None:
                 #   =>> Note that merging is slow and can be done post-hoc to speed up training
                 if cfg.use_lora:
                     base_vla = AutoModelForVision2Seq.from_pretrained(
-                        cfg.vla_path, torch_dtype=torch.bfloat16, low_cpu_mem_usage=True, trust_remote_code=True
+                        cfg.vla_path, torch_dtype=dtype, low_cpu_mem_usage=True, trust_remote_code=True    # torch.bfloat16
                     )
                     merged_vla = PeftModel.from_pretrained(base_vla, adapter_dir)
                     merged_vla = merged_vla.merge_and_unload()

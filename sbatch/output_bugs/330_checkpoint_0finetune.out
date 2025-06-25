@@ -1,0 +1,101 @@
+Hello zhangy50! You are on node gpu48.  The time is Sun Mar 30 16:32:24 EEST 2025.
+Sun Mar 30 16:32:25 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.124.06             Driver Version: 570.124.06     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H100 80GB HBM3          On  |   00000000:5F:00.0 Off |                    0 |
+| N/A   35C    P0             75W /  700W |       1MiB /  81559MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+/scratch/work/zhangy50/RL/openvla
+2025-03-30 16:32:59.991197: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-03-30 16:33:03.757291: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2025-03-30 16:33:03.767286: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2025-03-30 16:33:04.330645: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-03-30 16:33:05.576824: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX_VNNI AMX_TILE AMX_INT8 AMX_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-03-30 16:33:11.256204: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+2025-03-30 16:33:27.799342: W tensorflow/core/common_runtime/gpu/gpu_device.cc:2348] TensorFlow was not built with CUDA kernel binaries compatible with compute capability 9.0. CUDA kernels will be jit-compiled from PTX, which could take 30 minutes or longer.
+Fine-tuning OpenVLA Model `openvla/openvla-7b` on `example_dataset`
+use torch.bfloat16
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:07<00:15,  7.60s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:13<00:06,  6.72s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:14<00:00,  4.19s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:14<00:00,  4.96s/it]
+trainable params: 110,828,288 || all params: 7,652,065,472 || trainable%: 1.4483
+03/30 [16:34:14] INFO     | >> [*] Saved dataset statistics    data_utils.py:289
+                          file at path                                          
+                          runs/openvla-7b+example_dataset+b4+l                  
+                          r-2e-05+lora-r32+dropout-0.0+q-4bit-                  
+                          -image_aug/dataset_statistics.json                    
+wandb: Using wandb-core as the SDK backend. Please refer to https://wandb.me/wandb-core for more information.
+wandb: Currently logged in as: yibo-zhang. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.18.5
+wandb: Run data is saved locally in /scratch/work/zhangy50/RL/openvla/wandb/run-20250330_163415-igfgbw99
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run ft+openvla-7b+example_dataset+b4+lr-2e-05+lora-r32+dropout-0.0+q-4bit--image_aug
+wandb: ⭐️ View project at https://wandb.ai/yibo-zhang/openvla_spot
+wandb: 🚀 View run at https://wandb.ai/yibo-zhang/openvla_spot/runs/igfgbw99
+  0%|          | 0/200000 [00:00<?, ?it/s]`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/utils/checkpoint.py:460: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+                                          Traceback (most recent call last):
+  File "/scratch/work/zhangy50/RL/openvla/vla-scripts/finetune.py", line 378, in <module>
+    finetune()
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/draccus/argparsing.py", line 203, in wrapper_inner
+    response = fn(cfg, *args, **kwargs)
+  File "/scratch/work/zhangy50/RL/openvla/vla-scripts/finetune.py", line 277, in finetune
+    normalized_loss.backward()
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/_tensor.py", line 522, in backward
+    torch.autograd.backward(
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/autograd/__init__.py", line 266, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/autograd/function.py", line 289, in apply
+    return user_fn(self, *args)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/utils/checkpoint.py", line 319, in backward
+    torch.autograd.backward(outputs_with_grad, args_with_grad)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/autograd/__init__.py", line 266, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+RuntimeError: Expected to mark a variable ready only once. This error is caused by one of the following reasons: 1) Use of a module parameter outside the `forward` function. Please make sure model parameters are not shared across multiple concurrent forward-backward passes. or try to use _set_static_graph() as a workaround if this module graph does not change during training loop.2) Reused parameters in multiple reentrant backward passes. For example, if you use multiple `checkpoint` functions to wrap the same part of your model, it would result in the same set of parameters been used by different reentrant backward passes multiple times, and hence marking a variable ready multiple times. DDP does not support such use cases in default. You can try to use _set_static_graph() as a workaround if your module graph does not change over iterations.
+Parameter at index 875 with name base_model.model.language_model.model.layers.31.mlp.down_proj.lora_B.default.weight has been marked as ready twice. This means that multiple autograd engine  hooks have fired for this particular parameter during this iteration.
+[1;34mwandb[0m: 🚀 View run [33mft+openvla-7b+example_dataset+b4+lr-2e-05+lora-r32+dropout-0.0+q-4bit--image_aug[0m at: [34mhttps://wandb.ai/yibo-zhang/openvla_spot/runs/igfgbw99[0m
+[1;34mwandb[0m: Find logs at: [1;35mwandb/run-20250330_163415-igfgbw99/logs[0m
+[2025-03-30 16:34:31,137] torch.distributed.elastic.multiprocessing.api: [ERROR] failed (exitcode: 1) local_rank: 0 (pid: 3021071) of binary: /scratch/work/zhangy50/.conda_envs/openvla-spot/bin/python3.10
+Traceback (most recent call last):
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 347, in wrapper
+    return f(*args, **kwargs)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/run.py", line 812, in main
+    run(args)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/run.py", line 803, in run
+    elastic_launch(
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 135, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+vla-scripts/finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-03-30_16:34:31
+  host      : gpu48.int.triton.aalto.fi
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 3021071)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

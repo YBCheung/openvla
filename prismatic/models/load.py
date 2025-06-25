@@ -19,6 +19,7 @@ from prismatic.models.vlas import OpenVLA
 from prismatic.models.vlms import PrismaticVLM
 from prismatic.overwatch import initialize_overwatch
 from prismatic.vla.action_tokenizer import ActionTokenizer
+# from prismatic import available_model_names
 
 # Initialize Overwatch =>> Wraps `logging.Logger`
 overwatch = initialize_overwatch(__name__)
@@ -52,9 +53,9 @@ def get_model_description(model_id_or_name: str) -> str:
 def load(
     model_id_or_path: Union[str, Path],
     hf_token: Optional[str] = None,
-    cache_dir: Optional[Union[str, Path]] = None,
+    cache_dir: Optional[Union[str, Path]] = "/scratch/work/zhangy50/RL/cache",
     load_for_training: bool = False,
-) -> PrismaticVLM:
+) -> PrismaticVLM: 
     """Loads a pretrained PrismaticVLM from either local disk or the HuggingFace Hub."""
     if os.path.isdir(model_id_or_path):
         overwatch.info(f"Loading from local path `{(run_dir := Path(model_id_or_path))}`")
@@ -65,6 +66,7 @@ def load(
         assert checkpoint_pt.exists(), f"Missing checkpoint for `{run_dir = }`"
     else:
         if model_id_or_path not in GLOBAL_REGISTRY:
+            print(available_model_names(), model_id_or_path)
             raise ValueError(f"Couldn't find `{model_id_or_path = }; check `prismatic.available_model_names()`")
 
         overwatch.info(f"Downloading `{(model_id := GLOBAL_REGISTRY[model_id_or_path]['model_id'])} from HF Hub")
@@ -97,12 +99,16 @@ def load(
 
     # Load LLM Backbone --> note `inference_mode = True` by default when calling `load()`
     overwatch.info(f"Loading Pretrained LLM [bold]{model_cfg['llm_backbone_id']}[/] via HF Transformers")
-    llm_backbone, tokenizer = get_llm_backbone_and_tokenizer(
-        model_cfg["llm_backbone_id"],
-        llm_max_length=model_cfg.get("llm_max_length", 2048),
-        hf_token=hf_token,
-        inference_mode=not load_for_training,
-    )
+    try:
+        llm_backbone, tokenizer = get_llm_backbone_and_tokenizer(
+            model_cfg["llm_backbone_id"],
+            llm_max_length=model_cfg.get("llm_max_length", 2048),
+            hf_token=hf_token,
+            inference_mode=not load_for_training,
+        )
+    except Exception as e:
+        print(f"Error during load llm_backbone: {e}")
+        raise
 
     # Load VLM using `from_pretrained` (clobbers HF syntax... eventually should reconcile)
     overwatch.info(f"Loading VLM [bold blue]{model_cfg['model_id']}[/] from Checkpoint")
@@ -161,16 +167,20 @@ def load_vla(
 
         overwatch.info(f"Downloading Model `{model_id_or_path}` Config & Checkpoint `{target_ckpt}`")
         with overwatch.local_zero_first():
-            relpath = Path(model_type) / model_id_or_path
-            config_json = hf_hub_download(
-                repo_id=VLA_HF_HUB_REPO, filename=f"{(relpath / 'config.json')!s}", cache_dir=cache_dir
-            )
-            dataset_statistics_json = hf_hub_download(
-                repo_id=VLA_HF_HUB_REPO, filename=f"{(relpath / 'dataset_statistics.json')!s}", cache_dir=cache_dir
-            )
-            checkpoint_pt = hf_hub_download(
-                repo_id=VLA_HF_HUB_REPO, filename=f"{(relpath / 'checkpoints' / target_ckpt)!s}", cache_dir=cache_dir
-            )
+            try:
+                relpath = Path(model_type) / model_id_or_path
+                config_json = hf_hub_download(
+                    repo_id=VLA_HF_HUB_REPO, filename=f"{(relpath / 'config.json')!s}", cache_dir=cache_dir, use_auth_token=hf_token
+                )
+                dataset_statistics_json = hf_hub_download(
+                    repo_id=VLA_HF_HUB_REPO, filename=f"{(relpath / 'dataset_statistics.json')!s}", cache_dir=cache_dir, use_auth_token=hf_token
+                )
+                checkpoint_pt = hf_hub_download(
+                    repo_id=VLA_HF_HUB_REPO, filename=f"{(relpath / 'checkpoints' / target_ckpt)!s}", cache_dir=cache_dir, use_auth_token=hf_token
+                )
+            except Exception as e:
+                print(f"Error during download: {e}")
+                raise
 
     # Load VLA Config (and corresponding base VLM `ModelConfig`) from `config.json`
     with open(config_json, "r") as f:

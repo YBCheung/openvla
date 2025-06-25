@@ -1,0 +1,131 @@
+Hello zhangy50! You are on node gpu46.  The time is Wed Apr  9 17:14:21 EEST 2025.
+Wed Apr  9 17:14:21 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.124.06             Driver Version: 570.124.06     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H100 80GB HBM3          On  |   00000000:4E:00.0 Off |                    0 |
+| N/A   43C    P0             74W /  700W |       1MiB /  81559MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+/scratch/work/zhangy50/RL/openvla
+['/scratch/work/zhangy50/RL/openvla/vla-scripts', '/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python310.zip', '/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10', '/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/lib-dynload', '/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages', '__editable__.openvla-0.0.3.finder.__path_hook__']
+2025-04-09 17:15:06.281034: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-04-09 17:15:10.113466: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2025-04-09 17:15:10.134773: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2025-04-09 17:15:10.570208: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-04-09 17:15:12.345787: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX_VNNI AMX_TILE AMX_INT8 AMX_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-04-09 17:15:18.610005: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+2025-04-09 17:15:42.323236: W tensorflow/core/common_runtime/gpu/gpu_device.cc:2348] TensorFlow was not built with CUDA kernel binaries compatible with compute capability 9.0. CUDA kernels will be jit-compiled from PTX, which could take 30 minutes or longer.
+Fine-tuning OpenVLA Model `openvla/openvla-7b` on `spot_kitchen`
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:05<00:10,  5.15s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:07<00:03,  3.22s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:07<00:00,  1.90s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:07<00:00,  2.45s/it]
+trainable params: 110,828,288 || all params: 7,652,065,472 || trainable%: 1.4483
+2025-04-09 17:16:45.538292: I tensorflow/core/grappler/optimizers/data/replicate_on_split.cc:32] Running replicate on split optimization
+transforms, state shape =  (None, 8)
+transforms, state:  (None, 8) action:  (None, 7) Tensor("strided_slice_5:0", shape=(None, 7), dtype=float32)
+04/09 [17:16:47] INFO     | >> [*] Loading existing dataset    data_utils.py:208
+                          statistics from                                       
+                          /scratch/work/zhangy50/RL/spot_VLA/d                  
+                          ataset/tensorflow_datasets/spot_kitc                  
+                          hen/1.0.0/dataset_statistics_89c0500                  
+                          3c0730b0278cfc751602212a42b6e45642b2                  
+                          bc73b9a1e8c2a9a784b02.json.                           
+2025-04-09 17:16:47.255467: I tensorflow/core/grappler/optimizers/data/replicate_on_split.cc:32] Running replicate on split optimization
+transforms, state shape =  (None, 8)
+transforms, state:  (None, 8) action:  (None, 7) Tensor("strided_slice_5:0", shape=(None, 7), dtype=float32)
+
+######################################################################################
+# Loading the following 1 datasets (incl. sampling weight):                         #
+# spot_kitchen: ============================================================1.000000 #
+######################################################################################
+
+                 INFO     | >> [*] Threads per Dataset: [1]       dataset.py:531
+                 INFO     | >> [*] Reads per Dataset: [1]         dataset.py:532
+                 INFO     | >> [*] Constructing datasets...       dataset.py:535
+2025-04-09 17:16:47.674353: I tensorflow/core/grappler/optimizers/data/replicate_on_split.cc:32] Running replicate on split optimization
+transforms, state shape =  (None, 8)
+transforms, state:  (None, 8) action:  (None, 7) Tensor("strided_slice_5:0", shape=(None, 7), dtype=float32)
+04/09 [17:16:48] INFO     | >> [*] Applying frame transforms on   dataset.py:575
+                          dataset...                                            
+                 INFO     | >> [*] Saved dataset statistics    data_utils.py:289
+                          file at path                                          
+                          runs/openvla-7b+spot_kitchen+b24+lr-                  
+                          2e-05+lora-r32+dropout-0.0--image_au                  
+                          g/dataset_statistics.json                             
+wandb: Using wandb-core as the SDK backend. Please refer to https://wandb.me/wandb-core for more information.
+wandb: Currently logged in as: yibo-zhang. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.18.5
+wandb: Run data is saved locally in /scratch/work/zhangy50/RL/openvla/wandb/run-20250409_171649-o8azs463
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run ft+openvla-7b+spot_kitchen+b24+lr-2e-05+lora-r32+dropout-0.0--image_aug
+wandb: ⭐️ View project at https://wandb.ai/yibo-zhang/openvla_spot
+wandb: 🚀 View run at https://wandb.ai/yibo-zhang/openvla_spot/runs/o8azs463
+  0%|          | 0/10000 [00:00<?, ?it/s]WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+W0000 00:00:1744208210.861658 2426964 op_level_cost_estimator.cc:699] Error in PredictCost() for the op: op: "CropAndResize" attr { key: "T" value { type: DT_FLOAT } } attr { key: "extrapolation_value" value { f: 0 } } attr { key: "method" value { s: "bilinear" } } inputs { dtype: DT_FLOAT shape { dim { size: 1 } dim { size: 224 } dim { size: 224 } dim { size: -7 } } } inputs { dtype: DT_FLOAT shape { dim { size: -2 } dim { size: 4 } } } inputs { dtype: DT_INT32 shape { dim { size: -2 } } } inputs { dtype: DT_INT32 shape { dim { size: 2 } } } device { type: "CPU" vendor: "GenuineIntel" model: "111" frequency: 2100 num_cores: 4 environment { key: "cpu_instruction_set" value: "AVX SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2" } environment { key: "eigen" value: "3.4.90" } l1_cache_size: 49152 l2_cache_size: 2097152 l3_cache_size: 110100480 memory_size: 268435456 } outputs { dtype: DT_FLOAT shape { dim { size: -2 } dim { size: -8 } dim { size: -9 } dim { size: -7 } } }
+W0000 00:00:1744208210.862059 2426964 op_level_cost_estimator.cc:699] Error in PredictCost() for the op: op: "CropAndResize" attr { key: "T" value { type: DT_FLOAT } } attr { key: "extrapolation_value" value { f: 0 } } attr { key: "method" value { s: "bilinear" } } inputs { dtype: DT_FLOAT shape { dim { size: 1 } dim { size: 224 } dim { size: 224 } dim { size: -6 } } } inputs { dtype: DT_FLOAT shape { dim { size: -3 } dim { size: 4 } } } inputs { dtype: DT_INT32 shape { dim { size: -3 } } } inputs { dtype: DT_INT32 shape { dim { size: 2 } } } device { type: "CPU" vendor: "GenuineIntel" model: "111" frequency: 2100 num_cores: 4 environment { key: "cpu_instruction_set" value: "AVX SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2" } environment { key: "eigen" value: "3.4.90" } l1_cache_size: 49152 l2_cache_size: 2097152 l3_cache_size: 110100480 memory_size: 268435456 } outputs { dtype: DT_FLOAT shape { dim { size: -3 } dim { size: -10 } dim { size: -11 } dim { size: -6 } } }
+  0%|          | 1/10000 [00:20<57:08:34, 20.57s/it]                                                    Traceback (most recent call last):
+  File "/scratch/work/zhangy50/RL/openvla/vla-scripts/finetune.py", line 372, in <module>
+    finetune()
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/draccus/argparsing.py", line 203, in wrapper_inner
+    response = fn(cfg, *args, **kwargs)
+  File "/scratch/work/zhangy50/RL/openvla/vla-scripts/finetune.py", line 259, in finetune
+    output: CausalLMOutputWithPast = vla(
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 1525, in forward
+    return self._post_forward(output)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 1500, in _post_forward
+    passthrough_tensor_list = _DDPSink.apply(
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/autograd/function.py", line 553, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 245, in forward
+    ret = tuple(
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 246, in <genexpr>
+    inp.clone() if isinstance(inp, torch.Tensor) else inp for inp in inputs
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 56.00 MiB. GPU 0 has a total capacity of 79.19 GiB of which 33.81 MiB is free. Including non-PyTorch memory, this process has 79.15 GiB memory in use. Of the allocated memory 73.24 GiB is allocated by PyTorch, and 4.65 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[1;34mwandb[0m: 🚀 View run [33mft+openvla-7b+spot_kitchen+b24+lr-2e-05+lora-r32+dropout-0.0--image_aug[0m at: [34mhttps://wandb.ai/yibo-zhang/openvla_spot/runs/o8azs463[0m
+[1;34mwandb[0m: Find logs at: [1;35mwandb/run-20250409_171649-o8azs463/logs[0m
+[2025-04-09 17:17:26,983] torch.distributed.elastic.multiprocessing.api: [ERROR] failed (exitcode: 1) local_rank: 0 (pid: 2426964) of binary: /scratch/work/zhangy50/.conda_envs/openvla-spot/bin/python3.10
+Traceback (most recent call last):
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 347, in wrapper
+    return f(*args, **kwargs)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/run.py", line 812, in main
+    run(args)
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/run.py", line 803, in run
+    elastic_launch(
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 135, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/scratch/work/zhangy50/.conda_envs/openvla-spot/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+vla-scripts/finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-04-09_17:17:26
+  host      : gpu46.int.triton.aalto.fi
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 2426964)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
