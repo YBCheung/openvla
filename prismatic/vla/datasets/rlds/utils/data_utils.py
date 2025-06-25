@@ -276,33 +276,19 @@ def save_dataset_statistics(dataset_statistics, run_dir):
     out_path = run_dir / "dataset_statistics.json"
     with open(out_path, "w") as f_json:
         for _, stats in dataset_statistics.items():
-            # print("data_utils check", type(stats), type(stats["action"]), hasattr(stats["action"], "tolist"))
-            
-            # Handle action
-            if "action" in stats:
-                first_action_key = next(iter(stats["action"]))
-                # print(first_action_key, type(stats["action"][first_action_key]), hasattr(stats["action"][first_action_key], "tolist") )  # list, false
-                if hasattr(stats["action"][first_action_key], "tolist"):
-                    for k in stats["action"]:
-                        stats["action"][k] = stats["action"][k].tolist()
-
-            # Handle proprio
+            for k in stats["action"].keys():
+                if isinstance(stats["action"][k], np.ndarray):
+                    stats["action"][k] = stats["action"][k].tolist()
             if "proprio" in stats:
-                first_proprio_key = next(iter(stats["proprio"]))
-                if hasattr(stats["proprio"][first_proprio_key], "tolist"):
-                    for k in stats["proprio"]:
+                for k in stats["proprio"].keys():
+                    if isinstance(stats["proprio"][k], np.ndarray):
                         stats["proprio"][k] = stats["proprio"][k].tolist()
-
-            # Handle num_trajectories
             if "num_trajectories" in stats:
-                if hasattr(stats["num_trajectories"], "item"):
+                if isinstance(stats["num_trajectories"], np.ndarray):
                     stats["num_trajectories"] = stats["num_trajectories"].item()
-
-            # Handle num_transitions
             if "num_transitions" in stats:
-                if hasattr(stats["num_transitions"], "item"):
+                if isinstance(stats["num_transitions"], np.ndarray):
                     stats["num_transitions"] = stats["num_transitions"].item()
-
         json.dump(dataset_statistics, f_json, indent=2)
     overwatch.info(f"Saved dataset statistics file at path {out_path}")
 

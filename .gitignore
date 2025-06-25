@@ -150,5 +150,7 @@ data/
 
 # runs models
 runs/
-wandb/
 adapter-tmp/
+# Rollout videos and wandb logs
+rollouts/
+wandb/

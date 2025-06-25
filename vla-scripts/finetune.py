@@ -91,10 +91,10 @@ class FinetuneConfig:
     batch_size: int = 16  # 24 to big for H100                                        # Fine-tuning batch size
     max_steps: int = 10_000 # 10_000                                        # Max number of fine-tuning steps
     save_steps: int = 2000                                          # Interval for checkpoint saving
-    learning_rate: float = 2e-5                                     # Fine-tuning learning rate
+    learning_rate: float = 5e-4                                     # Fine-tuning learning rate
     grad_accumulation_steps: int = 1                                # Gradient accumulation steps
     image_aug: bool = True                                          # Whether to train with image augmentations
-    shuffle_buffer_size: int = 2000 # 100_000                              # Dataloader shuffle buffer size (can reduce if OOM)
+    shuffle_buffer_size: int = 100_000 # 100_000                              # Dataloader shuffle buffer size (can reduce if OOM)
     save_latest_checkpoint_only: bool = False                        # Whether to save only one checkpoint per run and
                                                                     #   continually overwrite the latest checkpoint
                                                                     #   (If False, saves all checkpoints)
@@ -370,6 +370,11 @@ def finetune(cfg: FinetuneConfig) -> None:
 
                 # Block on Main Process Checkpointing
                 dist.barrier()
+
+            # Stop training when max_steps is reached
+            if gradient_step_idx == cfg.max_steps:
+                print(f"Max step {cfg.max_steps} reached! Stopping training...")
+                break
 
 
 if __name__ == "__main__":
